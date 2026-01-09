@@ -64,6 +64,14 @@ in
         ExecStart = "${lib.getExe cfg.package} daemon run";
         Restart = "always";
         RestartSec = 5;
+        Environment = "PATH=${
+          builtins.concatStringsSep ":" [
+            "/run/wrappers/bin"
+            "/run/current-system/sw/bin"
+            "${config.home.homeDirectory}/.nix-profile/bin"
+            "${config.home.profileDirectory}/bin"
+          ]
+        }";
       };
 
       Install = {
